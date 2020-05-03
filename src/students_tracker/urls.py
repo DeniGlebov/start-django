@@ -13,8 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from students import views
 
@@ -23,4 +24,9 @@ urlpatterns = [
 
     path('hello-word/', views.hello_world),
     path('students/', views.students),
+    path('generate-student/', views.generate_student),
+    path('generate-students/', views.generate_students),
+
+    # path('group/', include('group.urls', namespace='group')),
+    # path('teachers/', include('teachers.urls', namespace='teachers')),
 ]
