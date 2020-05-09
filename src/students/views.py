@@ -28,10 +28,24 @@ def hello_world(request):  # from flask import request
 
 
 def students(request):
-    count = Student.objects.count()  # SELECT COUNT(*) FROM students_student;
+    # parse parameters
+    param = [
+        'age',
+        'age__gt',
+        'first_name',
+        'first_name__startswith',
+        'last_name',
+        'id',
+    ]
+
     students_queryset = Student.objects.all()  # SELECT * FROM students_student;
 
-    response = f'students: {count}<br/>'
+    for param in param:
+        value = request.GET.get(param)
+        if value:
+            students_queryset = students_queryset.filter(**{param: value})
+
+    response = f'students: {students_queryset.count()}<br/>'
 
     for student in students_queryset:
         response += student.info() + '<br/>'
