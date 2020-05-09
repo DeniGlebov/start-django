@@ -27,6 +27,6 @@ urlpatterns = [
     path('generate-student/', views.generate_student),
     path('generate-students/', views.generate_students),
 
-    path('group/', include('group.urls', namespace='group')),
-    # path('teachers/', include('teachers.urls', namespace='teachers')),
+    path('teachers/', include('teachers.urls')),
+    path('group/', include('group.urls')),
 ]
