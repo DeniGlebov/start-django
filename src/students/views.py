@@ -89,10 +89,6 @@ def index(request):
     return render(request, 'index.html')
 
 
-# from django.views.decorators.csrf import csrf_exempt
-#
-#
-# @csrf_exempt
 def create_student(request):
     from students.forms import StudentCreateForm
 

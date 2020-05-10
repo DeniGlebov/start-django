@@ -7,5 +7,5 @@ app_name = 'teachers'
 
 urlpatterns = [
     path('', views.teacher),
-    path('create1/', views.create_teacher),
+    path('create/', views.create_teacher),
 ]

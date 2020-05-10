@@ -1,13 +1,32 @@
+import datetime
+
 from django.db import models
 
 
-# Create your models here.
-
-
 class Group(models.Model):
-    theme = models.CharField(max_length=32)
-    created_group = models.DateTimeField(auto_now_add=True)
+    PHP = 'PHP'
+    Java = 'Java'
+    Python = 'Python'
+    Ruby = 'Ruby'
+    Rust = 'Rust'
+    Swift = 'Swift'
+    Linux = 'Linux'
+    Introduction = 'Introduction'
 
-    @property
+    course_list = (
+        [PHP, 'PHP'],
+        [Java, 'Java'],
+        [Python, 'Python'],
+        [Ruby, 'Ruby'],
+        [Rust, 'Rust'],
+        [Swift, 'Swift'],
+        [Linux, 'Linux'],
+        [Introduction, 'Introduction'],
+    )
+
+    course = models.CharField("Course name", max_length=32, choices=course_list, default='Introduction')
+    number_students_in_group = models.CharField("Person in group", max_length=2, default=14)
+    start_group = models.DateField("Start date, example: 2020-12-24", default=datetime.date.today)
+
     def full_status(self) -> str:
-        return f'{self.theme} {self.created_group}'
+        return f'{self.id} {self.course} {self.number_students_in_group} {self.start_group}'

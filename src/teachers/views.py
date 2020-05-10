@@ -5,6 +5,7 @@ from django.shortcuts import render
 
 from faker import Faker
 
+from teachers.forms import TeacherCreateForm
 from teachers.models import Teacher
 
 
@@ -44,8 +45,6 @@ def generate_teacher(request):
 
 
 def create_teacher(request):
-    from teachers.forms import TeacherCreateForm
-
     if request.method == 'POST':
         form = TeacherCreateForm(request.POST)
 

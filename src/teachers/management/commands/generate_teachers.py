@@ -12,7 +12,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fake = Faker()
-        course = ['Java', 'C', 'C++', 'Python', 'Linux', 'Window Server', 'GIT', 'Swift']
+
+        course = ['PHP', 'Java', 'Python', 'Ruby', 'Rust', 'Swift', 'Linux', 'Introduction']
         teacher = []
 
         for _ in range(100):
@@ -26,11 +27,3 @@ class Command(BaseCommand):
             )
 
         Teacher.objects.bulk_create(teacher)
-
-        # for _ in range(100):
-        #     Teacher.objects.create(
-        #         first_name=fake.first_name(),
-        #         last_name=fake.last_name(),
-        #         age=random.randint(20, 40),
-        #         course=random.choice(course),
-        #     )
