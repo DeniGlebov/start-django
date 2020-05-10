@@ -1,8 +1,8 @@
 import random
 import string
 
-from django.http import HttpResponse
-from django.shortcuts import render  # noqa
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 
 from faker import Faker
 
@@ -82,3 +82,29 @@ def generate_students(request):
         return HttpResponse(student_generate(int(request.GET['count'])))
     else:
         return HttpResponse(f'count value within 1-100')
+
+
+def index(request):
+    # student = Student.objects.order_by('?').last()
+    return render(request, 'index.html')
+
+
+from django.views.decorators.csrf import csrf_exempt
+
+
+@csrf_exempt
+def create_student(request):
+    from students.forms import StudentCreateForm
+
+    if request.method == 'POST':
+        form = StudentCreateForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    elif request.method == 'GET':
+        form = StudentCreateForm()
+
+    context = {'create_form': form}
+
+    return render(request, 'create.html', context=context)
