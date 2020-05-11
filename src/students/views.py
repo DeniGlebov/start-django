@@ -1,15 +1,15 @@
 import random
 import string
 
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from faker import Faker
 
-from students.models import Student
 from students.forms import StudentCreateForm
+from students.models import Student
 
 
 def generate_password(length: int = 10) -> str:
