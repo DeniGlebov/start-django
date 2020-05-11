@@ -1,12 +1,15 @@
 import random
 import string
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 from faker import Faker
 
 from students.models import Student
+from students.forms import StudentCreateForm
 
 
 def generate_password(length: int = 10) -> str:
@@ -45,12 +48,13 @@ def students(request):
         if value:
             students_queryset = students_queryset.filter(**{param: value})
 
-    response = f'students: {students_queryset.count()}<br/>'
+    # response = f'students: {students_queryset.count()}<br/>'
+    #
+    # for student in students_queryset:
+    #     response += student.info() + '<br/>'
+    # return HttpResponse(response)
 
-    for student in students_queryset:
-        response += student.info() + '<br/>'
-
-    return HttpResponse(response)
+    return render(request, 'students-list.html', context={'students': students_queryset})
 
 
 def generate_student(request):
@@ -89,6 +93,7 @@ def index(request):
     return render(request, 'index.html')
 
 
+@csrf_exempt
 def create_student(request):
     from students.forms import StudentCreateForm
 
@@ -97,10 +102,33 @@ def create_student(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('students:list'))
     elif request.method == 'GET':
         form = StudentCreateForm()
 
     context = {'create_form': form}
 
     return render(request, 'create.html', context=context)
+
+
+@csrf_exempt
+def edit_student(request, pk):
+    try:
+        student = get_object_or_404(Student, id=pk)
+    except OverflowError:  # http://127.0.0.1:8000/students/edit/9999999999999999999
+        raise Http404
+
+    # student = get_object_or_404(Student, id=pk)
+
+    if request.method == 'POST':
+        form = StudentCreateForm(request.POST, instance=student)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('students:list'))
+    elif request.method == 'GET':
+        form = StudentCreateForm(instance=student)
+
+    context = {'form': form}
+
+    return render(request, 'edit.html', context=context)
