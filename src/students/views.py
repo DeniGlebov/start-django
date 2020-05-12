@@ -1,11 +1,14 @@
 import random
 import string
 
-from django.http import HttpResponse
-from django.shortcuts import render  # noqa
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 from faker import Faker
 
+from students.forms import StudentCreateForm
 from students.models import Student
 
 
@@ -45,12 +48,13 @@ def students(request):
         if value:
             students_queryset = students_queryset.filter(**{param: value})
 
-    response = f'students: {students_queryset.count()}<br/>'
+    # response = f'students: {students_queryset.count()}<br/>'
+    #
+    # for student in students_queryset:
+    #     response += student.info() + '<br/>'
+    # return HttpResponse(response)
 
-    for student in students_queryset:
-        response += student.info() + '<br/>'
-
-    return HttpResponse(response)
+    return render(request, 'students-list.html', context={'students': students_queryset})
 
 
 def generate_student(request):
@@ -82,3 +86,49 @@ def generate_students(request):
         return HttpResponse(student_generate(int(request.GET['count'])))
     else:
         return HttpResponse(f'count value within 1-100')
+
+
+def index(request):
+    # student = Student.objects.order_by('?').last()
+    return render(request, 'index.html')
+
+
+@csrf_exempt
+def create_student(request):
+    from students.forms import StudentCreateForm
+
+    if request.method == 'POST':
+        form = StudentCreateForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('students:list'))
+    elif request.method == 'GET':
+        form = StudentCreateForm()
+
+    context = {'create_form': form}
+
+    return render(request, 'create.html', context=context)
+
+
+@csrf_exempt
+def edit_student(request, pk):
+    try:
+        student = get_object_or_404(Student, id=pk)
+    except OverflowError:  # http://127.0.0.1:8000/students/edit/9999999999999999999
+        raise Http404
+
+    # student = get_object_or_404(Student, id=pk)
+
+    if request.method == 'POST':
+        form = StudentCreateForm(request.POST, instance=student)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('students:list'))
+    elif request.method == 'GET':
+        form = StudentCreateForm(instance=student)
+
+    context = {'form': form}
+
+    return render(request, 'edit.html', context=context)

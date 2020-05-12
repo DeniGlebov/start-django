@@ -12,9 +12,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fake = Faker()
+        students = []
         for _ in range(1000):
-            Student.objects.create(
+            students.append(Student(
                 first_name=fake.first_name(),
                 last_name=fake.last_name(),
                 age=random.randint(20, 40),
-            )
+            ))
+
+        Student.objects.bulk_create(students)

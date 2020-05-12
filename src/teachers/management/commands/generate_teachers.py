@@ -8,15 +8,22 @@ from teachers.models import Teacher
 
 
 class Command(BaseCommand):
-    help = 'Generate random students'  # noqa
+    help = 'Generate random teacher'  # noqa
 
     def handle(self, *args, **options):
         fake = Faker()
-        course = ['Java', 'C', 'C++', 'Python', 'Linux', 'Window Server', 'GIT']
+
+        course = ['PHP', 'Java', 'Python', 'Ruby', 'Rust', 'Swift', 'Linux', 'Introduction']
+        teacher = []
+
         for _ in range(100):
-            Teacher.objects.create(
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
-                age=random.randint(20, 40),
-                course=random.choice(course),
+            teacher.append(
+                Teacher(
+                    first_name=fake.first_name(),
+                    last_name=fake.last_name(),
+                    age=random.randint(25, 45),
+                    course=random.choice(course),
+                )
             )
+
+        Teacher.objects.bulk_create(teacher)

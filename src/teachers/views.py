@@ -1,10 +1,11 @@
 import random
 
-from django.http import HttpResponse
-from django.shortcuts import render  # noqa
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 
 from faker import Faker
 
+from teachers.forms import TeacherCreateForm
 from teachers.models import Teacher
 
 
@@ -41,3 +42,18 @@ def generate_teacher(request):
     response = f'New teacher {teachers.full_info} age<br/>'
 
     return HttpResponse(response)
+
+
+def create_teacher(request):
+    if request.method == 'POST':
+        form = TeacherCreateForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    elif request.method == 'GET':
+        form = TeacherCreateForm()
+
+    context = {'create_form': form}
+
+    return render(request, 'teachers_create.html', context=context)
