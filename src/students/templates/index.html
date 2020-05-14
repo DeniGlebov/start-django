@@ -6,11 +6,14 @@
 </head>
 <body>
 
-<!--<a href="/students-list/">Student list</a>-->
 
 <a href="{% url 'students:list' %}">Student list</a>
-<a href="/teachers/create/">Create teacher</a>
-<a href="/group/create/">Create group</a>
+<br>
+<br>
+<a href="{% url 'teachers:list' %}">Teacher list</a>
+<br>
+<br>
+<a href="{% url 'group:list' %}">Group list</a>
 
 </body>
 </html>

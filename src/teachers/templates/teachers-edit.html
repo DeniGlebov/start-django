@@ -7,16 +7,12 @@
 <body>
 
 
-EDIT STUDENT
+EDIT TEACHER
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ edit_form.as_p }}
     <button type="submit">Submit</button>
 </form>
-<br>
-<button type="button">
-    <a href="{% url 'students:delete' pk=(request.split('/')[-1]) %}">Delete</a>
-</button>
 
 
 </body>
