@@ -117,7 +117,6 @@ def edit_student(request, pk):
         student = get_object_or_404(Student, id=pk)
     except OverflowError:  # http://127.0.0.1:8000/students/edit/9999999999999999999
         raise Http404
-    # breakpoint()
 
     # student = get_object_or_404(Student, id=pk)
 
@@ -130,16 +129,12 @@ def edit_student(request, pk):
     elif request.method == 'GET':
         form = StudentCreateForm(instance=student)
 
-    context = {'form': form}
-    # breakpoint()
+    context = {'form': form, 'instance': student}
 
     return render(request, 'edit.html', context=context)
 
 
-
 def delete_student(request, pk):
-
     student = get_object_or_404(Student, id=pk)
-    print(student.id)
-
+    student.delete()
     return HttpResponseRedirect(reverse('students:list'))

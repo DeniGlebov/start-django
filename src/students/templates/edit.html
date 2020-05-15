@@ -15,7 +15,7 @@ EDIT STUDENT
 </form>
 <br>
 <button type="button">
-    <a href="{% url 'students:delete' pk=(request.split('/')[-1]) %}">Delete</a>
+    <a href="{% url 'students:delete' instance.id %}">Delete</a>
 </button>
 
 

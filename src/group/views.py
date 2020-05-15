@@ -1,4 +1,4 @@
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
@@ -64,6 +64,12 @@ def edit_group(request, pk):
     elif request.method == 'GET':
         form = GroupCreateForm(instance=group)
 
-    context = {'form': form}
+    context = {'form': form, 'instance': group}
 
     return render(request, 'group-edit.html', context=context)
+
+
+def delete_group(request, pk):
+    group = get_object_or_404(Group, id=pk)
+    group.delete()
+    return HttpResponseRedirect(reverse('group:list'))

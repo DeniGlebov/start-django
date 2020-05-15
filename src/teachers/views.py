@@ -76,6 +76,12 @@ def edit_teacher(request, pk):
     elif request.method == 'GET':
         form = TeacherCreateForm(instance=teach)
 
-    context = {'edit_form': form}
+    context = {'edit_form': form, 'instance': teach}
 
     return render(request, 'teachers-edit.html', context=context)
+
+
+def delete_teacher(request, pk):
+    teach = get_object_or_404(Teacher, id=pk)
+    teach.delete()
+    return HttpResponseRedirect(reverse('teachers:list'))

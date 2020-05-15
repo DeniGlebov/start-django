@@ -11,7 +11,6 @@
 <a href="{% url 'teachers:create' %}">Create teacher</a>
 <br>
 
-
 {% for t in teachers %}
 <a href="{% url 'teachers:edit' pk=t.id %}">{{ t.id }}</a> {{ t.full_info }}<br>
 {% endfor %}

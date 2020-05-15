@@ -13,6 +13,10 @@ EDIT GROUP
     {{ form.as_p }}
     <button type="submit">Submit</button>
 </form>
+<br>
+<button type="button">
+    <a href="{% url 'group:delete' instance.id %}">Delete</a>
+</button>
 
 
 </body>
