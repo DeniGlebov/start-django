@@ -7,7 +7,7 @@
 <body>
 
 
-EDIT STUDENT
+EDIT GROUP
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
@@ -15,7 +15,7 @@ EDIT STUDENT
 </form>
 <br>
 <button type="button">
-    <a href="{% url 'students:delete' instance.id %}">Delete</a>
+    <a href="{% url 'group:delete' instance.id %}">Delete</a>
 </button>
 
 

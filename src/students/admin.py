@@ -7,7 +7,8 @@ class StudentAdmin(admin.ModelAdmin):
     list_per_page = 10
     list_display = ('id', 'first_name', 'last_name', 'age')
     fields = ('first_name', 'last_name', 'age')
-    readonly_fields = ('age', )
+
+    # readonly_fields = ('age',)
     # list_filter = ['age']
 
     def get_queryset(self, request):

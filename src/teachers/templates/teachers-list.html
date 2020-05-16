@@ -8,11 +8,11 @@
 
 <a href="{% url 'index' %}">Index</a>
 <br>
-<a href="{% url 'students:create' %}">Create student</a>
+<a href="{% url 'teachers:create' %}">Create teacher</a>
 <br>
 
-{% for student in students %}
-<a href="{% url 'students:edit' pk=student.id %}">{{ student.id }}</a> {{ student.full_name }}<br>
+{% for t in teachers %}
+<a href="{% url 'teachers:edit' pk=t.id %}">{{ t.id }}</a> {{ t.full_info }}<br>
 {% endfor %}
 
 

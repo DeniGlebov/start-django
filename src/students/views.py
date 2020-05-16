@@ -129,6 +129,12 @@ def edit_student(request, pk):
     elif request.method == 'GET':
         form = StudentCreateForm(instance=student)
 
-    context = {'form': form}
+    context = {'form': form, 'instance': student}
 
     return render(request, 'edit.html', context=context)
+
+
+def delete_student(request, pk):
+    student = get_object_or_404(Student, id=pk)
+    student.delete()
+    return HttpResponseRedirect(reverse('students:list'))
