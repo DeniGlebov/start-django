@@ -17,6 +17,8 @@ class StudentCreateForm(forms.ModelForm):
     def clean_phone(self):  # clean_ + field
         phone = self.cleaned_data['phone']
         cleaned_phone = ''.join(i for i in phone if i.isdigit())
+        if phone != cleaned_phone:
+            raise forms.ValidationError("Phone field only numbers!")
         return cleaned_phone
 
     # def clean(self):

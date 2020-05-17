@@ -38,6 +38,7 @@ def students(request):
         'first_name',
         'first_name__startswith',
         'last_name',
+        'phone',
         'id',
     ]
 

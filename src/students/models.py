@@ -10,10 +10,10 @@ class Student(models.Model):
 
     @property
     def full_name(self) -> str:
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name} {self.phone}'
 
     def info(self) -> str:
-        return f'{self.id} {self.first_name} {self.last_name} {self.age}'
+        return f'{self.id} {self.first_name} {self.last_name} {self.age} {self.phone}'
 
     def inc_age(self) -> None:
         self.age += 1
