@@ -27,3 +27,13 @@ class Student(models.Model):
         # self.phone = ''.join(i for i in self.phone if i.isdigit())
         super().save(**kwargs)
         print('After save')
+
+
+class Logger(models.Model):
+    method = models.CharField(max_length=24, default='')
+    path = models.CharField(max_length=512, default='')
+    execution_time = models.CharField(max_length=128)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def log(self) -> str:
+        return f'{self.method} {self.path} {self.execution_time} {self.created}'

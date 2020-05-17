@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from faker import Faker
 
 from students.forms import StudentCreateForm
-from students.models import Student
+from students.models import Logger, Student
 
 
 def generate_password(length: int = 10) -> str:
@@ -141,3 +141,12 @@ def delete_student(request, pk):
     student = get_object_or_404(Student, id=pk)
     student.delete()
     return HttpResponseRedirect(reverse('students:list'))
+
+
+def logging(method, path, execution_time):
+    Logger.objects.create(method=method, path=path, execution_time=execution_time).save()
+    return None
+
+
+def view_logs(request):
+    pass

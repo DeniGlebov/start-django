@@ -60,7 +60,8 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'silk.middleware.SilkyMiddleware',
 
-    'students.middlewares.SimpleMiddleware'
+    'students.middlewares.SimpleMiddleware',
+    'students.middlewares.LogMiddleware',
 ]
 
 ROOT_URLCONF = 'students_tracker.urls'
