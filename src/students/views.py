@@ -123,8 +123,8 @@ def edit_student(request, pk):
     if request.method == 'POST':
         form = StudentCreateForm(request.POST, instance=student)
 
-        if form.is_valid():
-            form.save()
+        if form.is_valid():  # form.clean
+            form.save()  # form.saveu
             return HttpResponseRedirect(reverse('students:list'))
     elif request.method == 'GET':
         form = StudentCreateForm(instance=student)
@@ -135,6 +135,8 @@ def edit_student(request, pk):
 
 
 def delete_student(request, pk):
+    print(pk)
+    print('delete_student')
     student = get_object_or_404(Student, id=pk)
     student.delete()
     return HttpResponseRedirect(reverse('students:list'))

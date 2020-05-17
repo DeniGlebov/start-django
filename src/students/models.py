@@ -6,6 +6,7 @@ class Student(models.Model):
     last_name = models.CharField(max_length=64)
     age = models.PositiveSmallIntegerField()  # models.IntegerField
     password = models.CharField(max_length=128, default='')
+    phone = models.CharField(max_length=24, default='')
 
     @property
     def full_name(self) -> str:
@@ -20,3 +21,9 @@ class Student(models.Model):
 
     def __str__(self):
         return self.info()
+
+    def save(self, **kwargs):
+        print('Before save')
+        # self.phone = ''.join(i for i in self.phone if i.isdigit())
+        super().save(**kwargs)
+        print('After save')
