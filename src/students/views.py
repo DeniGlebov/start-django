@@ -125,7 +125,7 @@ def edit_student(request, pk):
         form = StudentCreateForm(request.POST, instance=student)
 
         if form.is_valid():  # form.clean
-            form.save()  # form.saveu
+            form.save()  # form.save
             return HttpResponseRedirect(reverse('students:list'))
     elif request.method == 'GET':
         form = StudentCreateForm(instance=student)
@@ -149,4 +149,19 @@ def logging(method, path, execution_time):
 
 
 def view_logs(request):
-    pass
+    param = [
+        'method',
+        'path',
+        'execution_time',
+        'created',
+        'id',
+    ]
+
+    logs_queryset = Logger.objects.all()
+
+    for param in param:
+        value = request.GET.get(param)
+        if value:
+            logs_queryset = logs_queryset.filter(**{param: value})
+
+    return render(request, 'logs-list.html', context={'logs': logs_queryset})
