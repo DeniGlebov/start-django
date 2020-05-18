@@ -26,10 +26,11 @@ class Teacher(models.Model):
     last_name = models.CharField(max_length=64)
     age = models.PositiveSmallIntegerField()
     course = models.CharField(max_length=32, choices=course_list, default='Introduction')
+    phone = models.CharField(max_length=24, default='')
 
     @property
     def info_teacher(self) -> str:
-        return f'{self.first_name} {self.last_name} {self.age}'
+        return f'{self.first_name} {self.last_name} {self.age} {self.phone}'
 
     def full_info(self) -> str:
-        return f'{self.id} {self.first_name} {self.last_name} {self.age} {self.course}'
+        return f'{self.id} {self.first_name} {self.last_name} {self.age} {self.phone} {self.course}'

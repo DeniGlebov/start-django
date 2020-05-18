@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from faker import Faker
 
 from students.forms import StudentCreateForm
-from students.models import Student
+from students.models import Logger, Student
 
 
 def generate_password(length: int = 10) -> str:
@@ -38,6 +38,7 @@ def students(request):
         'first_name',
         'first_name__startswith',
         'last_name',
+        'phone',
         'id',
     ]
 
@@ -123,8 +124,8 @@ def edit_student(request, pk):
     if request.method == 'POST':
         form = StudentCreateForm(request.POST, instance=student)
 
-        if form.is_valid():
-            form.save()
+        if form.is_valid():  # form.clean
+            form.save()  # form.save
             return HttpResponseRedirect(reverse('students:list'))
     elif request.method == 'GET':
         form = StudentCreateForm(instance=student)
@@ -138,3 +139,27 @@ def delete_student(request, pk):
     student = get_object_or_404(Student, id=pk)
     student.delete()
     return HttpResponseRedirect(reverse('students:list'))
+
+
+def logging(method, path, execution_time):
+    Logger.objects.create(method=method, path=path, execution_time=execution_time).save()
+    return None
+
+
+def view_logs(request):
+    param = [
+        'method',
+        'path',
+        'execution_time',
+        'created',
+        'id',
+    ]
+
+    logs_queryset = Logger.objects.all()
+
+    for param in param:
+        value = request.GET.get(param)
+        if value:
+            logs_queryset = logs_queryset.filter(**{param: value})
+
+    return render(request, 'logs-list.html', context={'logs': logs_queryset})
