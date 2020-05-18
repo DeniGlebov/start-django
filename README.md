@@ -1,11 +1,11 @@
-(2) 1. Создать вью функцию которая будет генерировать одного студента с случайными параметрами.
-PATH: /generate-student/ student = Student.objects.create(first_name=faker.first_name) -> id, first_name, last_name, age
-(3) 2. Создать вью функцию которая будет генерировать случайных студентов по заданому количеству.
-PATH: /generate-students/?count=100 -> "список" из id, first_name, last_name, age.
-Добавить валидацию count (не быть отрицательным, не больше 100, быть целым числом)
-(3) 3. создать модель Group в приложении group добавить несколько полей (название и тип по-желанию)
-(2) 4. создать модель Teacher в приложении teachers добавить несколько полей (название и тип по-желанию)
+0. Добавить поле phone в модель Student
 
-Bonus:
-  1. Вывести все группы
-  2. Вывести всех учитЕлей
+1. Сделать raise ошибки если в поле phone ввели не цифры. (StudentCreateForm) django raise error in form
+
+2. Student, Teacher поля first_name and last_name сделать str.capitalize(). Добавить в сигнал (pre_save). Создать дата миграцию.
+
+3. Создать мидлварь LogMiddleware которая будет записывать параметры request.path, request.method, execution_time (diff), если запрос был на админку (/admin/)
+
+4. https://github.com/jazzband/django-silk
+
+5. Какая разница между поверхностной и глубокой копией (напромер списков)
