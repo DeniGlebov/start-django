@@ -12,5 +12,6 @@ def student_pre_save(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Student)
 def student_post_save(sender, instance, **kwargs):
-    print('post_save\n')
+    # print('post_save\n')
     # instance.profile.save()
+    pass

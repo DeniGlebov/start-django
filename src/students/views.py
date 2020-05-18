@@ -136,8 +136,6 @@ def edit_student(request, pk):
 
 
 def delete_student(request, pk):
-    print(pk)
-    print('delete_student')
     student = get_object_or_404(Student, id=pk)
     student.delete()
     return HttpResponseRedirect(reverse('students:list'))

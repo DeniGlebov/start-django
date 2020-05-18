@@ -23,10 +23,10 @@ class Student(models.Model):
         return self.info()
 
     def save(self, **kwargs):
-        print('Before save')
+        # print('Before save')
         # self.phone = ''.join(i for i in self.phone if i.isdigit())
         super().save(**kwargs)
-        print('After save')
+        # print('After save')
 
 
 class Logger(models.Model):
