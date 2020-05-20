@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+from celery.schedules import crontab
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -137,8 +139,6 @@ INTERNAL_IPS = [
 ]
 
 CELERY_BROKER_URL = 'amqp://localhost'
-
-from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
     'beat': {

@@ -10,7 +10,7 @@ from faker import Faker
 
 from students.forms import StudentCreateForm
 from students.models import Logger, Student
-from students.tasks import slow_func, print_student
+from students.tasks import print_student, slow_func
 
 
 def generate_password(length: int = 10) -> str:
