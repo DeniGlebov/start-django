@@ -10,6 +10,7 @@ from faker import Faker
 
 from students.forms import StudentCreateForm
 from students.models import Logger, Student
+from students.tasks import slow_func, print_student
 
 
 def generate_password(length: int = 10) -> str:
@@ -163,3 +164,23 @@ def view_logs(request):
             logs_queryset = logs_queryset.filter(**{param: value})
 
     return render(request, 'logs-list.html', context={'logs': logs_queryset})
+
+
+# def foo():
+#     while True:
+#         request = input()
+
+
+def slow(request):
+    from random import randint
+    n = randint(1, 10)
+
+    # slow_func.delay(n)  # 1
+    # slow_func.apply_async(args=[n], countdown=10)  # 2
+    slow_func.apply_async(kwargs={'num': n}, countdown=10)  # 3
+
+    student = Student.objects.first()
+    # int, float, str, list, dict, bool
+    print_student.apply_async(args=[student.id], countdown=20)
+
+    return HttpResponse('SLOW')

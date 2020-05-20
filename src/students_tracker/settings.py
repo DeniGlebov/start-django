@@ -135,3 +135,14 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+CELERY_BROKER_URL = 'amqp://localhost'
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'beat': {
+        'task': 'students.tasks.periodic',
+        'schedule': crontab(minute='*/1')
+    }
+}
