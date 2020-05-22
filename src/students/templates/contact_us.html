@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form action="/students/thanks_for_feedback/" method="post">
+    {% csrf_token %}
+    <label for="title">Title: </label>
+    <input id="title" type="text" name="title" value="{{ title }}">
+    <br>
+    <label for="message">Message: </label>
+    <input id="message" type="text" name="message" value="{{ message }}">
+    <br>
+    <label for="email_from">Email_from: </label>
+    <input id="email_from" type="text" name="email_from" value="{{ email_from }}">
+    <br>
+    <input type="Submit" value="Submit">
+</form>
+
+
+</body>
+</html>
