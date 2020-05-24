@@ -32,5 +32,9 @@ class Teacher(models.Model):
     def info_teacher(self) -> str:
         return f'{self.first_name} {self.last_name} {self.age} {self.phone}'
 
+    @property
+    def teacher_name(self) -> str:
+        return f'{self.first_name} {self.last_name}'
+
     def full_info(self) -> str:
         return f'{self.id} {self.first_name} {self.last_name} {self.age} {self.phone} {self.course}'

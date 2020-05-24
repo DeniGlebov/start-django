@@ -26,3 +26,12 @@ class StudentCreateForm(forms.ModelForm):
     #
     # def save(self, commit=True):
     #     pass
+
+
+class ContactUS(forms.ModelForm):
+    class Meta:
+        fields = (
+            'title',
+            'message',
+            'email_from',
+        )

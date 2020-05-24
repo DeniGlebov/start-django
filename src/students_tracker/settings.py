@@ -132,6 +132,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'enttestov2579532@gmail.com'
+EMAIL_HOST_PASSWORD = 'r04mjgmjjab348hbbS2Ss17'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+
 INTERNAL_IPS = [
     # ...
     '127.0.0.1',
@@ -144,5 +150,9 @@ CELERY_BEAT_SCHEDULE = {
     'beat': {
         'task': 'students.tasks.periodic',
         'schedule': crontab(minute='*/1')
-    }
+    },
+    'delete_log': {
+        'task': 'students.tasks.delete_logs',
+        'schedule': crontab(minute=0, hour=0)
+    },
 }
