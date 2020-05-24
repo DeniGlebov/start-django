@@ -1,6 +1,9 @@
 import random
 import string
 
+from django import forms
+from django.core.mail import BadHeaderError
+from django.core.validators import validate_email
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -10,6 +13,7 @@ from faker import Faker
 
 from students.forms import StudentCreateForm
 from students.models import Logger, Student
+from students.tasks import print_student, send_mail_contact_us, slow_func
 
 
 def generate_password(length: int = 10) -> str:
@@ -163,3 +167,48 @@ def view_logs(request):
             logs_queryset = logs_queryset.filter(**{param: value})
 
     return render(request, 'logs-list.html', context={'logs': logs_queryset})
+
+
+# def foo():
+#     while True:
+#         request = input()
+
+
+def slow(request):
+    from random import randint
+    n = randint(1, 10)
+
+    # slow_func.delay(n)  # 1
+    # slow_func.apply_async(args=[n], countdown=10)  # 2
+    slow_func.apply_async(kwargs={'num': n}, countdown=10)  # 3
+
+    student = Student.objects.first()
+    # int, float, str, list, dict, bool
+    print_student.apply_async(args=[student.id], countdown=20)
+
+    return HttpResponse('SLOW')
+
+
+def contact_us(request):
+    return render(request, 'contact_us.html')
+
+
+def thanks_for_feedback(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        message = request.POST.get('message')
+        email_from = request.POST.get('email_from')
+        try:
+            validate_email(request.POST.get('email_from'))
+        except forms.ValidationError:
+            return HttpResponse('Invalid email found, go back and correct.')
+
+        if title and message and email_from:
+            try:
+                msg = f'{title}\n {message}\n {email_from}'
+                send_mail_contact_us.apply_async(kwargs={'msg': msg}, countdown=30)
+            except BadHeaderError:
+                return HttpResponse('Invalid title found.')
+            return render(request, 'thanks_for_feedback.html')
+        else:
+            return HttpResponse('Make sure all fields are entered and valid, go back and correct.')
