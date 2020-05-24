@@ -12,10 +12,12 @@ def groups_all(request):
         'course',
         'number_students_in_group',
         'start_group',
+        'curator'
+        'head',
         'id',
     ]
 
-    group_queryset = Group.objects.all()
+    group_queryset = Group.objects.all().select_related('head', 'curator')
 
     for param in param:
         value = request.GET.get(param)

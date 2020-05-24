@@ -10,7 +10,7 @@ class Student(models.Model):
 
     @property
     def full_name(self) -> str:
-        return f'{self.first_name} {self.last_name} {self.phone}'
+        return f'{self.first_name} {self.last_name}'
 
     def info(self) -> str:
         return f'{self.id} {self.first_name} {self.last_name} {self.age} {self.phone}'
@@ -37,3 +37,7 @@ class Logger(models.Model):
 
     def log(self) -> str:
         return f'{self.method} {self.path} {self.execution_time} {self.created}'
+
+# OneToOne
+# OneToMany
+# ManyToMany

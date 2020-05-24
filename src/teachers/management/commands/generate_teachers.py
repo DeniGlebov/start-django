@@ -16,7 +16,7 @@ class Command(BaseCommand):
         course = ['PHP', 'Java', 'Python', 'Ruby', 'Rust', 'Swift', 'Linux', 'Introduction']
         teacher = []
 
-        for _ in range(100):
+        for _ in range(50):
             teacher.append(
                 Teacher(
                     first_name=fake.first_name(),

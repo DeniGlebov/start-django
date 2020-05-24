@@ -12,7 +12,7 @@
 <br>
 
 {% for t in teachers %}
-<a href="{% url 'teachers:edit' pk=t.id %}">{{ t.id }}</a> {{ t.full_info }}<br>
+<a href="{% url 'teachers:edit' pk=t.id %}">{{ t.id }}</a> {{ t.info_teacher }}<br>
 {% endfor %}
 
 

@@ -2,19 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Groups table</title>
+    <style type="text/css">
+   TABLE {
+    width: 900px;
+    border: 2px solid black;
+    background: #778899;
+    color: white;
+   }
+   TD, TH {
+    text-align: center;
+    padding: 4px;
+   }
+   TH {
+    color: white;
+    border-bottom: 4px double black;
+   }
+   .even {
+    background: #ffe4b5;
+    color: black;
+   }
+   .lc {
+    text-align: left;
+    color: #fffacd;
+   }
+
+
+
+    </style>
 </head>
 <body>
 
 <a href="{% url 'index' %}">Index</a>
 <br>
 <a href="{% url 'group:create' %}">Create group</a>
+
+<br>
 <br>
 
 
-{% for gr in group %}
-<a href="{% url 'group:edit' pk=gr.id %}">{{ gr.id }}</a> {{ gr.full_status }}<br>
-{% endfor %}
+<table class="table">
+    <tbody>
+    {% for gr in group %}
+    <tr>
+        <td><a href="{% url 'group:edit' pk=gr.id %}">{{ gr.id }}</a></td>
+        <td>{{ gr.course }}</td>
+        <td>{{ gr.number_students_in_group }}</td>
+        <td>{{ gr.start_group }}</td>
+        <td>{{ gr.head.full_name }}</td>
+        <td>{{ gr.curator.teacher_name }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
 
 </body>
