@@ -21,7 +21,7 @@ idna==2.9
 ipython==7.14.0
 ipython-genutils==0.2.0
 jedi==0.17.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 kombu==4.6.8
 MarkupSafe==1.1.1
 mccabe==0.6.1
